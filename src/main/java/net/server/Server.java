@@ -1435,7 +1435,7 @@ public class Server {
             lgnWLock.unlock();
         }
     }
-    
+
     /*
     public void deleteAccountEntry(Integer accountid) { is this even a thing?
         lgnWLock.lock();
@@ -1445,7 +1445,7 @@ public class Server {
         } finally {
             lgnWLock.unlock();
         }
-    
+
         for (World wserv : this.getWorlds()) {
             wserv.clearAccountCharacterView(accountid);
             wserv.unregisterAccountStorage(accountid);

@@ -580,6 +580,11 @@ public class Monster extends AbstractLoadedLife {
             distributePlayerExperience(mc, participationExp, partyBonusMod, totalPartyLevel, mc == participationMvp, isWhiteExpGain(mc, personalRatio, sdevRatio), hasPartySharers);
             giveFamilyRep(mc.getFamilyEntry());
         }
+        for (Character mc : partyParticipation.keySet().iterator().next().getPartyMembersOnline()) {
+            if (!expMembers.contains(mc)) {
+                mc.raiseQuestMobCount(getId()); // Raise mob count for all party members
+            }
+        }
     }
 
     private void distributeExperience(int killerId) {
@@ -1245,7 +1250,7 @@ public class Monster extends AbstractLoadedLife {
             int webDamage = (int) (getMaxHp() / 50.0 + 0.999);
             status.setValue(MonsterStatus.SHADOW_WEB, Integer.valueOf(webDamage));
             animationTime = broadcastStatusEffect(status);
-            
+
             overtimeAction = new DamageTask(webDamage, from, status, 1);
             overtimeDelay = 3500;
             */
@@ -1473,7 +1478,7 @@ public class Monster extends AbstractLoadedLife {
             if (mp < mpCon) {
                 return false;
             }
-            
+
             /*
             if (!this.applyAnimationIfRoaming(-1, toUse)) {
                 return false;
@@ -1555,7 +1560,7 @@ public class Monster extends AbstractLoadedLife {
             if (mp < mpCon) {
                 return -1;
             }
-            
+
             /*
             if (!this.applyAnimationIfRoaming(attackPos, null)) {
                 return -1;
@@ -2082,11 +2087,11 @@ public class Monster extends AbstractLoadedLife {
                 this.setControllerHasAggro(true);
                 this.aggroUpdatePuppetVisibility();
             }
-            
+
             /*
             For some reason, some mobs loses aggro on controllers if other players also attacks them.
             Maybe Nexon intended to interchange controllers at every attack...
-            
+
             else if (chrController != null) {
                 chrController.sendPacket(PacketCreator.stopControllingMonster(this.getObjectId()));
                 aggroMonsterControl(chrController.getClient(), this, true);
